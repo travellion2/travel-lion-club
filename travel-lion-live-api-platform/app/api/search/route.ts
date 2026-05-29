@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import { searchTravel } from '@/lib/search';
-import type { SearchRequest } from '@/lib/types';
 
 const schema = z.object({
   destination: z.string().min(1),
@@ -25,16 +24,20 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    const parsed: SearchRequest = schema.parse(body);
+    const parsed = schema.parse(body);
 
-    const results = await searchTravel(parsed);
+    const results = await searchTravel({
+      destination: parsed.destination,
+      dates: parsed.dates,
+      travelers: parsed.travelers,
+      category: parsed.category,
+      memberTier: parsed.memberTier
+    });
 
     return NextResponse.json({ results });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      {
-        error: error?.message || 'Invalid search request'
-      },
+      { error: 'Invalid search request' },
       { status: 400 }
     );
   }
