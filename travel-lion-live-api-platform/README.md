@@ -72,4 +72,4 @@ Passcode can be anything in demo mode.
 - Payments: Stripe Checkout + Stripe Customer Portal
 - Emails: Resend
 - Travel data: Expedia Rapid API / CruiseBase / SupremeGolf / Jettly
-- Build trigger 2026-05-29
+- Build trigger 2026-05-29 
